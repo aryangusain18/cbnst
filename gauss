@@ -1,0 +1,33 @@
+#include <stdio.h>
+void solution(int a[][20], int var) {
+int k, i, l, j;
+for (k = 0; k < var; k++) {
+for (i = 0; i <= var; i++) {
+l = a[i][k];
+for (j = 0; j <= var; j++) {
+if (i != k)
+a[i][j] = (a[k][k] * a[i][j]) - (l * a[k][j]);
+}
+}
+}
+printf("\n");
+for (i = 0; i < var; i++) {
+printf("x%d = %.2f\t", i + 1, (float)a[i][var] / (float)a[i][i]);
+}
+}
+int main() {
+int a[20][20], var, i, j, k, l, n;
+printf("\nEnter the number of variables: ");
+scanf("%d", &var);
+for (i = 0; i < var; i++) {
+printf("\nEnter the equation %d\n", i + 1);
+printf("\nEnter x1 x2 x3: ");
+for (j = 0; j < var; j++) {
+scanf("%d", &a[i][j]);
+}
+printf("Enter the constant: ");
+scanf("%d", &a[i][var]);
+}
+solution(a, var);
+return 0;
+}
