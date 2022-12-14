@@ -1,0 +1,53 @@
+create table customer(
+cust_id int primary key,
+cust_name varchar2(255))
+
+create table pizza_item(
+item_id int primary key,
+item_name varchar2(255),
+price int)
+
+create table sales(
+bill_no int primary key,
+bill_date date,
+cust_id int,
+item_id int,
+qty_sold int,
+foreign key (cust_id) references customer(cust_id),
+foreign key (item_id) references pizza_item(item_id)
+
+insert all 
+into customer values(1,'rahul ')
+into customer values(2,'rohit')
+into customer values(3,'virat ')
+into customer values(4,'surya ')
+into customer values(5,'risabh ')
+select * from dual;
+
+insert all 
+into pizza_item values(101,'chicago pizza',1200)
+into  pizza_item values(102,'a',800)
+into  pizza_item values(103,'b',1300)
+into  pizza_item values(104,'c',2300)
+into  pizza_item values(105,'d',1000)
+select * from dual;
+
+insert all 
+into sales values(1,'13-DEC-2022',1,101,1)
+into sales values(2,'12-DEC-2022',1,102,2)
+into sales values(3,'11-DEC-2022',2,102,1)
+into sales values(4,'14-DEC-2022',4,103,1)
+into sales values(5,'15-DEC-2022',5,104,3)
+select * from dual;
+
+1. select * from pizza_items where price = (select min(price) from pizza_item);
+2. select * from pizza_items where price > (select avg(price) from pizza_item);
+3. select bill_no, bill_date, s.cust_id, s.item_id, qty_sold from sale s, pizza_item p where p.item_id = s.item_id and (qty_sold * price) > 1200;
+4. update pizza_item set price = 2000 where item_name = 'Chicago Pizza);
+5. select round(avg(qty_sold)) from sale group by item_id order by round(avg(qty_sold)) desc;
+6. 
+7. select cust_name from customer where cust_id in (select cust_id from customer group by item_id having count(cust_id) = 2);
+8. create view cust_view as select cust_name, item_name, bill_no from customer c, pizza_item p, sale s where s.item_id = p.item_id and s.cust_id = c.cust_id;
+9. select cust_id, cust_name from customer c, sale s where c.cust_id = s.cust_id and s.cust_id in (select cust_id from pizza_item p left join sale s on s.item_id = p.item_id);
+10. delete from pizza_item where item_id not in (select item_id from sale);
+
