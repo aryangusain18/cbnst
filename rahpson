@@ -5,7 +5,7 @@ float f(float x) {
 return x*log(x)-1.2;
 }
 float derivative(float x) {
-return !+log(x);
+return 1+log(x);
 }
 int main() {
 float x;
